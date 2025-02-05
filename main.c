@@ -19,19 +19,20 @@ void displayTasks(Task *task_list, int task_count);
 void main_menu();
 void add_task();
 int inputValid();
+void changeStatus();
 
 int inputValid()
 {
-
+    char buffer[50];
     int userInput = 0;
     while (1)
     {
-        printf("\n> ");
-        if(scanf("%d", &userInput) == 1){
-            return userInput;
-        }else{
-            printf("\nInvalid input. Try again\n\n");
-            while(getchar() != '\n');
+        if(fgets(buffer, sizeof(buffer), stdin) != NULL){
+            if(sscanf(buffer, "%d", userInput) == 1){
+                return userInput;
+            }else{
+                puts("Invalid input. Try again");
+            }
         }
     }
     
@@ -77,6 +78,13 @@ void displayTasks(Task *task_list, int task_count)
     }
 }
 
+void changeStatus()
+{
+    puts("Choose task to update: ");
+    displayTasks(taskList, taskCount);
+
+}
+
 
 int main()
 {
@@ -100,6 +108,9 @@ void main_menu()
         }
         else if(userInput == 2){
             add_task();
+            break;
+        }else if(userInput == 3){
+            changeStatus();
             break;
         }
 
